@@ -53,12 +53,11 @@ module.exports = {
                         if (erro) return res.badRequest(erro);
 
                         visionClient
-                            .labelDetection(`gs://${CLOUD_BUCKET}/${item[0].id}`)
+                            .documentTextDetection(`gs://${CLOUD_BUCKET}/${item[0].id}`)
                             .then(results => {
-                                const labels = results[0].labelAnnotations;
-                                console.log('Labels:');
-                                labels.forEach(label => console.log(label.description));
-                                res.json({fileUrl: getPublicUrl(item[0].id), file: item[0].id, labels: labels});
+                                const fullTextAnnotation = results[0].fullTextAnnotation;
+                                console.log(fullTextAnnotation.text);
+                                res.json({fileUrl: getPublicUrl(item[0].id), file: item[0].id, texto: fullTextAnnotation.text});
                             })
                             .catch(errs => {
                                 res.badRequest(errs);
