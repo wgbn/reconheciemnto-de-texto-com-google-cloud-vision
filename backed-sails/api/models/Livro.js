@@ -12,7 +12,7 @@ module.exports = {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-    nome: { type: 'string', required: true },
+    titulo: { type: 'string', required: true },
     autor: { type: 'string', required: true },
     ano: { type: 'number', required: true },
     editora: { type: 'string', required: true },
