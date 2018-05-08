@@ -38,6 +38,8 @@ module.exports = {
                 return res.badRequest(err);
             }
 
+            console.log(uploadedFiles);
+
             // If no files were uploaded, respond with an error.
             if (uploadedFiles.length === 0) {
                 return res.badRequest('No file was uploaded');
