@@ -29,7 +29,7 @@ module.exports = {
             return res.badRequest('Arquivo não enviado');
         }
 
-        req.file('page').upload({
+        req.file().upload({
             // don't allow the total upload size to exceed ~10MB
             maxBytes: 10000000
         }, (err, uploadedFiles) => {
