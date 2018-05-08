@@ -23,6 +23,7 @@ module.exports = {
     uploadPagina(req, res) {
 
         console.log(req.body);
+        console.log(req.file);
 
         if (!req.file) {
             return res.badRequest('Arquivo não enviado');
