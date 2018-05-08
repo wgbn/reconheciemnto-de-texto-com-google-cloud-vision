@@ -60,8 +60,8 @@ module.exports = {
                                 labels.forEach(label => console.log(label.description));
                                 res.json({fileUrl: getPublicUrl(item[0].id), file: item[0].id, labels: labels});
                             })
-                            .catch(err => {
-                                console.error('ERROR:', err);
+                            .catch(errs => {
+                                res.badRequest(errs);
                             });
                     });
                     // res.json({fileUrl: getPublicUrl(item[0].id), file: item[0].id});
