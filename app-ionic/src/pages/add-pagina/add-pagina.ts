@@ -23,6 +23,8 @@ export class AddPaginaPage {
     newPath: any = null;
     saveLoad: boolean = false;
 
+    res: any;
+
     constructor(
         private navCtrl: NavController,
         private navParams: NavParams,
@@ -70,8 +72,11 @@ export class AddPaginaPage {
             this.srv.uploadFile('pagina/uploadpagina', {path: this.foto, newPath: this.newPath}, {livroId: this.livro.id, pagina: this.pagina.pagina}).subscribe(
                 success => {
 
-                    if (success.body.ok) {
-                        this.srv.update(`pagina/${success.body.pagina.id}`, {texto: success.body.texto}).subscribe(
+                    //console.log(JSON.stringify(success.response));
+                    this.res = JSON.parse(success.response);
+
+                    if (this.res.ok) {
+                        this.srv.update(`pagina/${this.res.pagina.id}`, {texto: this.res.texto}).subscribe(
                             salvo => {
                                 this.saveLoad = false;
                                 this.foto = null;

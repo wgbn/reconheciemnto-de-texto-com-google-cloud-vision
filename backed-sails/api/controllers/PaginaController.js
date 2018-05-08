@@ -52,7 +52,7 @@ module.exports = {
                         scan: getPublicUrl(item[0].id),
                         pagina: req.body.pagina,
                         livro: req.body.livroId
-                    }).exec( (erro, page) => {
+                    }).fetch().exec( (erro, page) => {
                         if (erro) return res.badRequest(erro);
 
                         console.log('# pagina OK');
@@ -64,7 +64,7 @@ module.exports = {
 
                                 if (results && results instanceof Array && results.length && results[0].fullTextAnnotation && results[0].fullTextAnnotation.text) {
                                     console.log('# OCR OK');
-                                    res.json({ok: true, pagina: page, fileUrl: getPublicUrl(item[0].id), file: item[0].id, texto: results[0].fullTextAnnotation.text});
+                                    res.json({ok: true, paginaId: page, fileUrl: getPublicUrl(item[0].id), file: item[0].id, texto: results[0].fullTextAnnotation.text});
                                 } else {
                                     res.json({ok: false, pagina: page, fileUrl: getPublicUrl(item[0].id), file: item[0].id});
                                 }
