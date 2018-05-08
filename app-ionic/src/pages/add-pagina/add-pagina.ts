@@ -20,6 +20,7 @@ export class AddPaginaPage {
     pagina: any = {};
     options: CameraOptions = {};
     foto: any = null;
+    newPath: any = null;
     saveLoad: boolean = false;
 
     constructor(
@@ -66,7 +67,7 @@ export class AddPaginaPage {
             );*/
 
             this.saveLoad = true;
-            this.srv.uploadFile('pagina/uploadpagina', {path: this.foto, newPath: this.pagina.path}, {livroId: this.livro.id, pagina: this.pagina.pagina}).subscribe(
+            this.srv.uploadFile('pagina/uploadpagina', {path: this.foto, newPath: this.newPath}, {livroId: this.livro.id, pagina: this.pagina.pagina}).subscribe(
                 success => {
                     this.saveLoad = false;
                     this.foto = null;
@@ -93,7 +94,7 @@ export class AddPaginaPage {
             sourceFileName = sourceFileName.split('?').shift();
             this.file.copyFile(sourceDirectory, sourceFileName, cordova.file.externalApplicationStorageDirectory, sourceFileName).then((result: any) => {
                 this.foto = imageData;
-                this.pagina.path = result.nativeURL;
+                this.newPath = result.nativeURL;
 
             }, (err) => {
                 alert(JSON.stringify(err));
@@ -105,8 +106,8 @@ export class AddPaginaPage {
         });
     }
 
-    getImagem() {
-        return this.sn.bypassSecurityTrustResourceUrl(this.foto);
+    getImagem(imagem) {
+        return this.sn.bypassSecurityTrustResourceUrl(imagem);
     }
 
 }

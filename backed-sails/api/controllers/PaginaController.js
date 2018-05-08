@@ -22,8 +22,6 @@ module.exports = {
 
     uploadPagina(req, res) {
 
-        console.log(req.body);
-
         if (!req.file) {
             return res.badRequest('Arquivo não enviado');
         }
@@ -36,8 +34,6 @@ module.exports = {
                 console.log(err);
                 return res.badRequest(err);
             }
-
-            console.log(uploadedFiles);
 
             // If no files were uploaded, respond with an error.
             if (uploadedFiles.length === 0) {
@@ -60,9 +56,7 @@ module.exports = {
                         visionClient
                             .documentTextDetection(`gs://${CLOUD_BUCKET}/${item[0].id}`)
                             .then(results => {
-                                const fullTextAnnotation = results[0].fullTextAnnotation;
-                                console.log(fullTextAnnotation.text);
-                                res.json({fileUrl: getPublicUrl(item[0].id), file: item[0].id, fullTextAnnotation: fullTextAnnotation});
+                                res.json({fileUrl: getPublicUrl(item[0].id), file: item[0].id, results: results});
                             })
                             .catch(errs => {
                                 res.badRequest(errs);
