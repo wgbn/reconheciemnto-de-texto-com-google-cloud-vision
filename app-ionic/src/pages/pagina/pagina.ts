@@ -60,9 +60,30 @@ export class PaginaPage {
             this.load = true;
             this.srv.create('pagina/scanear', {file: this.pagina.scan}).subscribe(
                 success => {
-                    this.load = false;
+                    if (success.body.ok) {
+                        this.srv.update(`pagina/${this.pagina.id}`, {texto: success.body.texto}).subscribe(
+                            salvo => {
+                                this.load = false;
+                                this.pagina.texto = success.body.texto;
+                            }
+                        );
+                    } else {
+                        this.load = false;
+                        let alert = this.alertCtrl.create({
+                            title: 'Ooops!',
+                            subTitle: 'Não foi possível reconhecer a imagem. tente uma melhor.',
+                            buttons: ['OK']
+                        });
+                        alert.present();
+                    }
                 }, err => {
                     this.load = false;
+                    let alert = this.alertCtrl.create({
+                        title: 'Ooops!',
+                        subTitle: 'Não foi possível conectar ao servidor',
+                        buttons: ['OK']
+                    });
+                    alert.present();
                 }
             );
         }

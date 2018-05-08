@@ -4,13 +4,6 @@ import {AddPaginaPage} from "../add-pagina/add-pagina";
 import {GenericService} from "../../app/generic.service";
 import {PaginaPage} from "../pagina/pagina";
 
-/**
- * Generated class for the LivroPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
     selector: 'page-livro',
@@ -63,10 +56,18 @@ export class LivroPage {
                 {
                     text: 'Sim',
                     handler: () => {
+                        this.load = true;
                         this.livro.paginas.forEach( pagina => this.srv.delete('pagina', pagina.id).subscribe(ok => console.log('pagina esxluida', pagina.id)) );
                         this.srv.delete('livro', this.livro.id).subscribe(
-                            success => this.navCtrl.pop(),
-                            err => alert('Não foi possivel conectar ao servidor')
+                            success => {this.load = false; this.navCtrl.pop(); },
+                            err => {
+                                let alert = this.alertCtrl.create({
+                                    title: 'Ooops!',
+                                    subTitle: 'Não foi possível conectar ao servidor',
+                                    buttons: ['OK']
+                                });
+                                alert.present();
+                            }
                         );
                     }
                 }

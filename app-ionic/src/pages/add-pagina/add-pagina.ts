@@ -4,7 +4,6 @@ import {Camera, CameraOptions} from "@ionic-native/camera";
 import {GenericService} from "../../app/generic.service";
 import {DomSanitizer} from "@angular/platform-browser";
 import {File} from "@ionic-native/file";
-import {FileTransfer, FileUploadOptions, FileTransferObject} from "@ionic-native/file-transfer";
 
 declare var cordova: any;
 

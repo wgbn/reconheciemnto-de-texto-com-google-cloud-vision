@@ -18,8 +18,10 @@
     </div>
 
     <ion-list *ngIf="!load else loading">
-        <button ion-item *ngFor="let pagina of livro.paginas" (click)="paginaClick(pagina)">Página: {{pagina.pagina}}</button>
-        <ion-item *ngIf="livro.paginas.length == 0">nenhuma página digitalizada</ion-item>
+        <ng-container *ngIf="livro">
+            <button ion-item *ngFor="let pagina of livro.paginas" (click)="paginaClick(pagina)">Página: {{pagina.pagina}}</button>
+            <ion-item *ngIf="livro.paginas.length == 0">nenhuma página digitalizada</ion-item>
+        </ng-container>
     </ion-list>
 
     <ng-template #loading>

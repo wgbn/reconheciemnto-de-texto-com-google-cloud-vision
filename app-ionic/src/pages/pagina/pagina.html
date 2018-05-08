@@ -10,16 +10,24 @@
 <ion-content padding>
 
     <div class="acoes">
-        <button ion-button block color="danger" (click)="scanearClick()">Re-Scanear</button>
+        <button ion-button block color="primary" (click)="scanearClick()">Re-Scanear</button>
         <button ion-button block color="danger" (click)="excluirPaginaClick()">Excluir Página</button>
     </div>
 
-    <div class="imagem">
-        <img [src]="imagem">
-    </div>
+    <ng-container *ngIf="!load else loading">
+        <div class="imagem">
+            <img [src]="imagem">
+        </div>
 
-    <pre *ngIf="pagina.texto">
-        {{pagina.texto}}
-    </pre>
+        <pre *ngIf="pagina.texto">
+            {{pagina.texto}}
+        </pre>
+    </ng-container>
+
+    <ng-template #loading>
+        <div style="text-align: center">
+            <i class="fa fa-spin fa-spinner" style="font-size: 2em; color: #488aff;"></i>
+        </div>
+    </ng-template>
 
 </ion-content>
