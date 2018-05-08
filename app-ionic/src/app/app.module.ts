@@ -18,6 +18,8 @@ import {FormsModule} from "@angular/forms";
 import {Camera} from "@ionic-native/camera";
 import {File} from "@ionic-native/file";
 import {FileTransfer} from "@ionic-native/file-transfer";
+import {PaginaPage} from "../pages/pagina/pagina";
+import {PaginaPageModule} from "../pages/pagina/pagina.module";
 
 @NgModule({
     declarations: [
@@ -31,7 +33,8 @@ import {FileTransfer} from "@ionic-native/file-transfer";
         IonicModule.forRoot(MyApp),
         LivroPageModule,
         AddLivroPageModule,
-        AddPaginaPageModule
+        AddPaginaPageModule,
+        PaginaPageModule
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -39,7 +42,8 @@ import {FileTransfer} from "@ionic-native/file-transfer";
         HomePage,
         LivroPage,
         AddLivroPage,
-        AddPaginaPage
+        AddPaginaPage,
+        PaginaPage
     ],
     providers: [
         StatusBar,

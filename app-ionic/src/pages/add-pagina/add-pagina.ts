@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Camera, CameraOptions} from "@ionic-native/camera";
 import {GenericService} from "../../app/generic.service";
 import {DomSanitizer} from "@angular/platform-browser";
@@ -31,6 +31,7 @@ export class AddPaginaPage {
         private camera: Camera,
         private srv: GenericService,
         private sn: DomSanitizer,
+        private alertCtrl: AlertController,
         private file: File) {
         this.livro = navParams.get('livro');
 
@@ -49,24 +50,6 @@ export class AddPaginaPage {
 
     salvarPagina(values) {
         if (this.foto) {
-            /*const formData = new FormData();
-            formData.append("page", this.foto);
-            formData.append('livroId', this.livro.id);
-            formData.append('pagina', this.pagina.pagina);
-
-            this.saveLoad = true;
-
-            return this.srv.upload('pagina/uploadpagina', formData).subscribe(
-                success => {
-                    this.saveLoad = false;
-                    this.foto = null;
-                    this.navCtrl.pop();
-                }, err => {
-                    this.saveLoad = false;
-                    alert('Erro ao conectar ao servidor');
-                    console.log(JSON.stringify(err));
-                }
-            );*/
 
             this.saveLoad = true;
             this.srv.uploadFile('pagina/uploadpagina', {path: this.foto, newPath: this.newPath}, {livroId: this.livro.id, pagina: this.pagina.pagina}).subscribe(
@@ -85,22 +68,36 @@ export class AddPaginaPage {
                             }, erro => {
                                 this.saveLoad = false;
                                 this.saveLoad = false;
-                                alert('Erro ao conectar ao servidor');
-                                console.log(JSON.stringify(erro));
+                                let alert = this.alertCtrl.create({
+                                    title: 'Ooops!',
+                                    subTitle: 'Não foi possível conectar ao servidor',
+                                    buttons: ['OK']
+                                });
+                                alert.present();
                             }
                         );
                     } else {
                         this.saveLoad = false;
                         this.foto = null;
                         this.pagina = {};
-                        alert('A imagem não pôde ser reconhecida\nTente outra melhor.');
+
+                        let alert = this.alertCtrl.create({
+                            title: 'Ooops!',
+                            subTitle: 'A imagem não pôde ser reconhecida. Tente outra melhor.',
+                            buttons: ['OK']
+                        });
+                        alert.present();
                     }
 
                 },err => {
                     this.saveLoad = false;
                     this.saveLoad = false;
-                    alert('Erro ao conectar ao servidor');
-                    console.log(JSON.stringify(err));
+                    let alert = this.alertCtrl.create({
+                        title: 'Ooops!',
+                        subTitle: 'Não foi possível conectar ao servidor',
+                        buttons: ['OK']
+                    });
+                    alert.present();
                 }
             );
         }
@@ -118,16 +115,23 @@ export class AddPaginaPage {
                 this.newPath = result.nativeURL;
 
             }, (err) => {
-                alert(JSON.stringify(err));
+                let alert = this.alertCtrl.create({
+                    title: 'Ooops!',
+                    subTitle: 'Erro ao copiar o arquivo.',
+                    buttons: ['OK']
+                });
+                alert.present();
             });
 
         }, (err) => {
-            alert('Erro ao bater a foto');
+            let alert = this.alertCtrl.create({
+                title: 'Ooops!',
+                subTitle: 'Erro ao bater a foto.',
+                buttons: ['OK']
+            });
+            alert.present();
             console.log(JSON.stringify(err));
         });
-        /*this.srv.list('pagina/teste').subscribe(
-            success => console.log(success), err => console.log(err)
-        );*/
     }
 
     getImagem(imagem) {

@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController} from 'ionic-angular';
+import {AlertController, IonicPage, NavController} from 'ionic-angular';
 import {GenericService} from "../../app/generic.service";
 
 @IonicPage()
@@ -12,7 +12,7 @@ export class AddLivroPage {
     livro: any = {};
     saveLoad: boolean = false;
 
-    constructor(private navCtrl: NavController, private srv: GenericService) { }
+    constructor(private navCtrl: NavController, private srv: GenericService, private alertCtrl: AlertController) { }
 
     ionViewDidLoad() {
         console.log('ionViewDidLoad AddLivroPage');
@@ -26,7 +26,12 @@ export class AddLivroPage {
                 this.navCtrl.pop();
             }, err => {
                 this.saveLoad = false;
-                alert('Erro ao conectar ao servidor');
+                let alert = this.alertCtrl.create({
+                    title: 'Ooops!',
+                    subTitle: 'Não foi possível conectar ao servidor',
+                    buttons: ['OK']
+                });
+                alert.present();
             }
         );
     }

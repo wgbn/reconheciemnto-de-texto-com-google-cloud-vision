@@ -23,7 +23,7 @@ export class GenericService {
     }
 
     update(resource: string, item: any): Observable<any> {
-        return this.http.put(`${this.baseURL}/${resource}/${item.id}`, item, {observe: 'response'});
+        return this.http.put(`${this.baseURL}/${resource}`, item, {observe: 'response'});
     }
 
     delete(resource: string, id: any): Observable<any> {

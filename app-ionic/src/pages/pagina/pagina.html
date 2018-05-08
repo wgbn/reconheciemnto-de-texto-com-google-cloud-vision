@@ -1,0 +1,25 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Página {{pagina.pagina}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <div class="acoes">
+        <button ion-button block color="danger" (click)="scanearClick()">Re-Scanear</button>
+        <button ion-button block color="danger" (click)="excluirPaginaClick()">Excluir Página</button>
+    </div>
+
+    <div class="imagem">
+        <img [src]="imagem">
+    </div>
+
+    <pre *ngIf="pagina.texto">
+        {{pagina.texto}}
+    </pre>
+
+</ion-content>

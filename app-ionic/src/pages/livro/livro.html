@@ -12,11 +12,20 @@
 
 <ion-content padding>
 
-    <button ion-button block color="primary" (click)="addPaginaClick()">Adicionar Página</button>
+    <div class="acoes">
+        <button ion-button block color="primary" (click)="addPaginaClick()">Adicionar Página</button>
+        <button ion-button block color="danger" (click)="exluirLivroClick()">Excluir Livro</button>
+    </div>
 
-    <ion-list *ngIf="livro">
+    <ion-list *ngIf="!load else loading">
         <button ion-item *ngFor="let pagina of livro.paginas" (click)="paginaClick(pagina)">Página: {{pagina.pagina}}</button>
         <ion-item *ngIf="livro.paginas.length == 0">nenhuma página digitalizada</ion-item>
     </ion-list>
+
+    <ng-template #loading>
+        <div style="text-align: center">
+            <i class="fa fa-spin fa-spinner" style="font-size: 2em; color: #488aff;"></i>
+        </div>
+    </ng-template>
 
 </ion-content>

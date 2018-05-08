@@ -84,11 +84,16 @@ module.exports = {
 
     },
 
-    teste(req, res) {
+    scanear(req, res) {
         visionClient
-            .documentTextDetection(`gs://${CLOUD_BUCKET}/pagina.jpg`)
+            .documentTextDetection(req.body.file)
             .then(results => {
-                res.json(results);
+                if (results && results instanceof Array && results.length && results[0].fullTextAnnotation && results[0].fullTextAnnotation.text) {
+                    console.log('# OCR OK');
+                    res.json({ok: true, texto: results[0].fullTextAnnotation.text});
+                } else {
+                    res.json({ok: false});
+                }
             })
             .catch(errs => {
                 res.badRequest(errs);
