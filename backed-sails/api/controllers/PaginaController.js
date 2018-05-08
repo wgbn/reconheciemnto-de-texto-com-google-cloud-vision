@@ -23,13 +23,12 @@ module.exports = {
     uploadPagina(req, res) {
 
         console.log(req.body);
-        console.log(req);
 
         if (!req.file) {
             return res.badRequest('Arquivo não enviado');
         }
 
-        req.file().upload({
+        req.file('page').upload({
             // don't allow the total upload size to exceed ~10MB
             maxBytes: 10000000
         }, (err, uploadedFiles) => {
