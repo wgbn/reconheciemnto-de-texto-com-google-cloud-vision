@@ -45,6 +45,8 @@ module.exports = {
             bucket
                 .upload(uploadedFiles[0].fd)
                 .then(item => {
+                    console.log('# upload OK');
+                    console.log(item[0].id);
 
                     Pagina.create({
                         scan: getPublicUrl(item[0].id),
@@ -53,23 +55,29 @@ module.exports = {
                     }).exec( (erro, ok) => {
                         if (erro) return res.badRequest(erro);
 
+                        console.log('# pagina OK');
+
                         visionClient
                             .documentTextDetection(`gs://${CLOUD_BUCKET}/${item[0].id}`)
                             .then(results => {
+                                console.log('# vision OK');
+
                                 if (results && results instanceof Array && results.length && results[0].fullTextAnnotation && results[0].fullTextAnnotation.text) {
+                                    console.log('# OCR OK');
                                     res.json({ok: true, pagina: ok, fileUrl: getPublicUrl(item[0].id), file: item[0].id, texto: results[0].fullTextAnnotation.text});
                                 } else {
                                     res.json({ok: false, pagina: ok, fileUrl: getPublicUrl(item[0].id), file: item[0].id});
                                 }
                             })
                             .catch(errs => {
+                                console.log('# vison ERR');
                                 res.badRequest(errs);
                             });
                     });
                     // res.json({fileUrl: getPublicUrl(item[0].id), file: item[0].id});
                 })
                 .catch(error => {
-                    console.log(error);
+                    console.log('# upload ERR');
                     res.badRequest(error);
                 });
         });

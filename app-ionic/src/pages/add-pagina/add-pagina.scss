@@ -2,4 +2,19 @@ page-add-pagina {
     .foto {
         width: 95%;
     }
+
+    .acoes {
+        button {
+            margin-bottom: 1em;
+        }
+    }
+
+    .loading {
+        text-align: center;
+
+        i {
+            font-size: 2em;
+            color: #488aff;
+        }
+    }
 }

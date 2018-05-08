@@ -70,10 +70,8 @@ export class AddPaginaPage {
             this.srv.uploadFile('pagina/uploadpagina', {path: this.foto, newPath: this.newPath}, {livroId: this.livro.id, pagina: this.pagina.pagina}).subscribe(
                 success => {
 
-                    if (success.body.results && success.body.results instanceof Array && success.body.results.length && success.body.results[0].fullTextAnnotation && success.body.results[0].fullTextAnnotation.text) {
-                        let _texto = success.body.results[0].fullTextAnnotation.text;
-
-                        this.srv.update(`pagina/${id}`, {texto: _texto}).subscribe(
+                    if (success.body.ok) {
+                        this.srv.update(`pagina/${success.body.pagina.id}`, {texto: success.body.texto}).subscribe(
                             salvo => {
                                 this.saveLoad = false;
                                 this.foto = null;
@@ -86,6 +84,11 @@ export class AddPaginaPage {
                                 console.log(JSON.stringify(erro));
                             }
                         );
+                    } else {
+                        this.saveLoad = false;
+                        this.foto = null;
+                        this.pagina = {};
+                        alert('A imagem não pôde ser reconhecida\nTente outra melhor.');
                     }
 
                 },err => {
@@ -95,15 +98,13 @@ export class AddPaginaPage {
                     console.log(JSON.stringify(err));
                 }
             );
-        } else {
-            return null;
         }
     }
 
     baterFoto() {
-        /*this.camera.getPicture(this.options).then((imageData) => {
+        this.camera.getPicture(this.options).then((imageData) => {
 
-            /!*let sourceDirectory = imageData.substring(0, imageData.lastIndexOf('/') + 1);
+            let sourceDirectory = imageData.substring(0, imageData.lastIndexOf('/') + 1);
             let sourceFileName = imageData.substring(imageData.lastIndexOf('/') + 1, imageData.length);
             sourceFileName = sourceFileName.split('?').shift();
 
@@ -113,21 +114,23 @@ export class AddPaginaPage {
 
             }, (err) => {
                 alert(JSON.stringify(err));
-            });*!/
-            this.foto = imageData;
-            this.newPath = imageData;
+            });
 
         }, (err) => {
             alert('Erro ao bater a foto');
             console.log(JSON.stringify(err));
-        });*/
-        this.srv.list('pagina/teste').subscribe(
+        });
+        /*this.srv.list('pagina/teste').subscribe(
             success => console.log(success), err => console.log(err)
-        );
+        );*/
     }
 
     getImagem(imagem) {
         return this.sn.bypassSecurityTrustResourceUrl(imagem);
+    }
+
+    cancelarClick() {
+        this.navCtrl.pop();
     }
 
 }

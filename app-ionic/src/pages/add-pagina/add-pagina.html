@@ -18,16 +18,13 @@
             </ion-item>
 
             <ion-item *ngIf="newPath">
-                <img [src]="getImagem(newPath)" class="foto">
-            </ion-item>
-
-            <ion-item>
-                <button ion-button block type="button" color="primary" (click)="baterFoto()">Bater Foto</button>
+                <img [src]="newPath" class="foto">
             </ion-item>
 
         </ion-list>
 
         <div class="acoes" *ngIf="!saveLoad else loading">
+            <button ion-button block type="button" color="danger" (click)="baterFoto()">Bater Foto</button>
             <button ion-button block color="primary" type="submit" [disabled]="!addForm.form.valid || !newPath">Salvar Página</button>
             <button ion-button block outline type="button" (click)="cancelarClick()">Cancelar</button>
         </div>
