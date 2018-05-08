@@ -62,7 +62,7 @@ module.exports = {
                             .then(results => {
                                 const fullTextAnnotation = results[0].fullTextAnnotation;
                                 console.log(fullTextAnnotation.text);
-                                res.json({fileUrl: getPublicUrl(item[0].id), file: item[0].id, texto: fullTextAnnotation.text});
+                                res.json({fileUrl: getPublicUrl(item[0].id), file: item[0].id, fullTextAnnotation: fullTextAnnotation});
                             })
                             .catch(errs => {
                                 res.badRequest(errs);

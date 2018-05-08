@@ -39,7 +39,7 @@ export class GenericService {
 
             let filename = arquivo.path.split('/').pop();
             let options = {
-                fileKey: "file",
+                fileKey: "page",
                 fileName: filename,
                 chunkedMode: false,
                 mimeType: "image/jpg",
