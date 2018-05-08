@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>
       Livros
     </ion-title>
@@ -8,7 +8,7 @@
 
 <ion-content padding>
 
-  <button ion-button block color="primary">Adicionar Livro</button>
+  <button ion-button block color="primary" (click)="addLivroClick()">Adicionar Livro</button>
 
   <ion-list>
     <button ion-item *ngFor="let livro of livros" (click)="livroClick(livro)">{{livro.titulo}}</button>

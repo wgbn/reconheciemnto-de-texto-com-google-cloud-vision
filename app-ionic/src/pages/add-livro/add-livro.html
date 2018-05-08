@@ -1,0 +1,47 @@
+<ion-header>
+
+    <ion-navbar color="primary">
+        <ion-title>Adicionar Livro</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <form novalidate #addForm="ngForm" (ngSubmit)="salvarLivroClick(addForm.value)">
+
+        <ion-list>
+
+            <ion-item>
+                <ion-input type="text" placeholder="Título" name="titulo" [(ngModel)]="livro.titulo" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-input type="text" placeholder="Autor" name="autor" [(ngModel)]="livro.autor" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-input type="text" placeholder="Ano" name="ano" [(ngModel)]="livro.ano" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-input type="text" placeholder="Editora" name="editora" [(ngModel)]="livro.editora" required></ion-input>
+            </ion-item>
+
+        </ion-list>
+
+        <div class="acoes" *ngIf="!saveLoad else loading">
+            <button ion-button block color="primary" type="submit" [disabled]="!addForm.form.valid">Salvar Livro</button>
+            <button ion-button block outline type="button" (click)="cancelarClick()">Cancelar</button>
+        </div>
+
+        <ng-template #loading>
+            <div class="loading">
+                <i class="fa fa-spin fa-spinner"></i>
+            </div>
+        </ng-template>
+
+    </form>
+
+</ion-content>

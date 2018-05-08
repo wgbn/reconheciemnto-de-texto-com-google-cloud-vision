@@ -30,7 +30,7 @@ export class GenericService {
     }
 
     upload(resource: string, item: any): Observable<any> {
-        return this.http.request(`${this.baseURL}/${resource}`, item, {observe: 'response'});
+        return this.http.request('post', `${this.baseURL}/${resource}`, {body: item, observe: 'response'});
     }
 
 }

@@ -1,0 +1,22 @@
+<ion-header>
+
+    <ion-navbar color="primary">
+        <ion-title *ngIf="livro else loadTitulo">{{livro.titulo}}</ion-title>
+        <ng-template #loadTitulo>
+            <ion-title>carregando...</ion-title>
+        </ng-template>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <button ion-button block color="primary" (click)="addPaginaClick()">Adicionar Página</button>
+
+    <ion-list *ngIf="livro">
+        <button ion-item *ngFor="let pagina of livro.paginas" (click)="paginaClick(pagina)">Página: {{pagina.pagina}}</button>
+        <ion-item *ngIf="livro.paginas.length == 0">nenhuma página digitalizada</ion-item>
+    </ion-list>
+
+</ion-content>

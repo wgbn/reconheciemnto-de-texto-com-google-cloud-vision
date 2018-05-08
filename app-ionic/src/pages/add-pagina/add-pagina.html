@@ -1,0 +1,43 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Adicionar página</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <form novalidate #addForm="ngForm" (ngSubmit)="salvarPagina(addForm.value)">
+
+        <ion-list>
+
+            <ion-item>
+                <ion-input type="number" placeholder="Página" name="pagina" [(ngModel)]="pagina.pagina" required></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="foto">
+                <img [src]="foto" class="foto">
+            </ion-item>
+
+            <ion-item>
+                <button ion-button block type="button" color="primary" (click)="baterFoto()">Bater Foto</button>
+            </ion-item>
+
+        </ion-list>
+
+        <div class="acoes" *ngIf="!saveLoad else loading">
+            <button ion-button block color="primary" type="submit" [disabled]="!addForm.form.valid">Salvar Página</button>
+            <button ion-button block outline type="button" (click)="cancelarClick()">Cancelar</button>
+        </div>
+
+        <ng-template #loading>
+            <div class="loading">
+                <i class="fa fa-spin fa-spinner"></i>
+            </div>
+        </ng-template>
+
+    </form>
+
+</ion-content>

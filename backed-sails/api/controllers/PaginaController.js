@@ -22,6 +22,8 @@ module.exports = {
 
     uploadPagina(req, res) {
 
+        console.log(req.body);
+
         if (!req.file) {
             return res.badRequest('Arquivo não enviado');
         }
@@ -48,7 +50,8 @@ module.exports = {
 
                     Pagina.create({
                         scan: getPublicUrl(item[0].id),
-                        pagina: req.body.pagina
+                        pagina: req.body.pagina,
+                        livro: req.body.livroId
                     }).exec( (erro, ok) => {
                         if (erro) return res.badRequest(erro);
 
