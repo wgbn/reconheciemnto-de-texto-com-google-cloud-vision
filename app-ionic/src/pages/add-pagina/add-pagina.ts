@@ -3,6 +3,10 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Camera, CameraOptions} from "@ionic-native/camera";
 import {GenericService} from "../../app/generic.service";
 import {DomSanitizer} from "@angular/platform-browser";
+import {File} from "@ionic-native/file";
+import {FileTransfer, FileUploadOptions, FileTransferObject} from "@ionic-native/file-transfer";
+
+declare var cordova: any;
 
 @IonicPage()
 @Component({
@@ -18,7 +22,13 @@ export class AddPaginaPage {
     foto: any = null;
     saveLoad: boolean = false;
 
-    constructor(private navCtrl: NavController, private navParams: NavParams, private camera: Camera, private srv: GenericService, private sn: DomSanitizer) {
+    constructor(
+        private navCtrl: NavController,
+        private navParams: NavParams,
+        private camera: Camera,
+        private srv: GenericService,
+        private sn: DomSanitizer,
+        private file: File) {
         this.livro = navParams.get('livro');
 
         this.options = {
@@ -36,7 +46,7 @@ export class AddPaginaPage {
 
     salvarPagina(values) {
         if (this.foto) {
-            const formData = new FormData();
+            /*const formData = new FormData();
             formData.append("page", this.foto);
             formData.append('livroId', this.livro.id);
             formData.append('pagina', this.pagina.pagina);
@@ -53,6 +63,22 @@ export class AddPaginaPage {
                     alert('Erro ao conectar ao servidor');
                     console.log(JSON.stringify(err));
                 }
+            );*/
+
+            this.saveLoad = true;
+            this.srv.uploadFile('pagina/uploadpagina', {path: this.foto, newPath: this.pagina.path}, {livroId: this.livro.id, pagina: this.pagina.pagina}).subscribe(
+                success => {
+                    this.saveLoad = false;
+                    this.foto = null;
+                    this.pagina = {};
+                    this.navCtrl.pop();
+                    console.log(JSON.stringify(success));
+                },err => {
+                    this.saveLoad = false;
+                    this.saveLoad = false;
+                    alert('Erro ao conectar ao servidor');
+                    console.log(JSON.stringify(err));
+                }
             );
         } else {
             return null;
@@ -61,9 +87,18 @@ export class AddPaginaPage {
 
     baterFoto() {
         this.camera.getPicture(this.options).then((imageData) => {
-            // imageData is either a base64 encoded string or a file URI
-            // If it's base64:
-            this.foto = imageData;
+
+            let sourceDirectory = imageData.substring(0, imageData.lastIndexOf('/') + 1);
+            let sourceFileName = imageData.substring(imageData.lastIndexOf('/') + 1, imageData.length);
+            sourceFileName = sourceFileName.split('?').shift();
+            this.file.copyFile(sourceDirectory, sourceFileName, cordova.file.externalApplicationStorageDirectory, sourceFileName).then((result: any) => {
+                this.foto = imageData;
+                this.pagina.path = result.nativeURL;
+
+            }, (err) => {
+                alert(JSON.stringify(err));
+            })
+
         }, (err) => {
             alert('Erro ao bater a foto');
             console.log(JSON.stringify(err));

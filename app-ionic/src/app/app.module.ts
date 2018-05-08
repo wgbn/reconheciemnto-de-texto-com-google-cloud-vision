@@ -16,6 +16,8 @@ import {AddLivroPage} from "../pages/add-livro/add-livro";
 import {AddPaginaPage} from "../pages/add-pagina/add-pagina";
 import {FormsModule} from "@angular/forms";
 import {Camera} from "@ionic-native/camera";
+import {File} from "@ionic-native/file";
+import {FileTransfer} from "@ionic-native/file-transfer";
 
 @NgModule({
     declarations: [
@@ -43,6 +45,8 @@ import {Camera} from "@ionic-native/camera";
         StatusBar,
         SplashScreen,
         Camera,
+        File,
+        FileTransfer,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         GenericService
     ]
