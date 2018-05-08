@@ -69,11 +69,25 @@ export class AddPaginaPage {
             this.saveLoad = true;
             this.srv.uploadFile('pagina/uploadpagina', {path: this.foto, newPath: this.newPath}, {livroId: this.livro.id, pagina: this.pagina.pagina}).subscribe(
                 success => {
-                    this.saveLoad = false;
-                    this.foto = null;
-                    this.pagina = {};
-                    this.navCtrl.pop();
-                    console.log(success.body.file);
+
+                    if (success.body.results && success.body.results instanceof Array && success.body.results.length && success.body.results[0].fullTextAnnotation && success.body.results[0].fullTextAnnotation.text) {
+                        let _texto = success.body.results[0].fullTextAnnotation.text;
+
+                        this.srv.update(`pagina/${id}`, {texto: _texto}).subscribe(
+                            salvo => {
+                                this.saveLoad = false;
+                                this.foto = null;
+                                this.pagina = {};
+                                this.navCtrl.pop();
+                            }, erro => {
+                                this.saveLoad = false;
+                                this.saveLoad = false;
+                                alert('Erro ao conectar ao servidor');
+                                console.log(JSON.stringify(erro));
+                            }
+                        );
+                    }
+
                 },err => {
                     this.saveLoad = false;
                     this.saveLoad = false;
@@ -87,9 +101,9 @@ export class AddPaginaPage {
     }
 
     baterFoto() {
-        this.camera.getPicture(this.options).then((imageData) => {
+        /*this.camera.getPicture(this.options).then((imageData) => {
 
-            /*let sourceDirectory = imageData.substring(0, imageData.lastIndexOf('/') + 1);
+            /!*let sourceDirectory = imageData.substring(0, imageData.lastIndexOf('/') + 1);
             let sourceFileName = imageData.substring(imageData.lastIndexOf('/') + 1, imageData.length);
             sourceFileName = sourceFileName.split('?').shift();
 
@@ -99,14 +113,17 @@ export class AddPaginaPage {
 
             }, (err) => {
                 alert(JSON.stringify(err));
-            });*/
+            });*!/
             this.foto = imageData;
             this.newPath = imageData;
 
         }, (err) => {
             alert('Erro ao bater a foto');
             console.log(JSON.stringify(err));
-        });
+        });*/
+        this.srv.list('pagina/teste').subscribe(
+            success => console.log(success), err => console.log(err)
+        );
     }
 
     getImagem(imagem) {

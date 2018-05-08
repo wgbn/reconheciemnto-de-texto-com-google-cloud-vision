@@ -56,7 +56,11 @@ module.exports = {
                         visionClient
                             .documentTextDetection(`gs://${CLOUD_BUCKET}/${item[0].id}`)
                             .then(results => {
-                                res.json({fileUrl: getPublicUrl(item[0].id), file: item[0].id, results: results});
+                                if (results && results instanceof Array && results.length && results[0].fullTextAnnotation && results[0].fullTextAnnotation.text) {
+                                    res.json({ok: true, pagina: ok, fileUrl: getPublicUrl(item[0].id), file: item[0].id, texto: results[0].fullTextAnnotation.text});
+                                } else {
+                                    res.json({ok: false, pagina: ok, fileUrl: getPublicUrl(item[0].id), file: item[0].id});
+                                }
                             })
                             .catch(errs => {
                                 res.badRequest(errs);
