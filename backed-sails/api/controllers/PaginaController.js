@@ -13,6 +13,7 @@ const storage = Storage({
 });
 const bucket = storage.bucket(CLOUD_BUCKET);
 
+// configura o Google Vision Api
 const visionClient = new vision.ImageAnnotatorClient({
     keyFileName: '../../sgcc-263c86483c3c.json'
 });
