@@ -9,13 +9,13 @@ const CLOUD_BUCKET = 'sgcc-storage-data';
 
 const storage = Storage({
     projectId: CLOUD_ID,
-    keyFileName: '../../sgcc-263c86483c3c.json'
+    keyFileName: '../../gcloud-key.json'
 });
 const bucket = storage.bucket(CLOUD_BUCKET);
 
 // configura o Google Vision Api
 const visionClient = new vision.ImageAnnotatorClient({
-    keyFileName: '../../sgcc-263c86483c3c.json'
+    keyFileName: '../../gcloud-key.json'
 });
 
 module.exports = {
