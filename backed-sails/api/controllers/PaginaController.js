@@ -70,7 +70,18 @@ module.exports = {
                 });
         });
 
-    }  
+    },
+
+    teste(req, res) {
+        visionClient
+            .documentTextDetection(`gs://${CLOUD_BUCKET}/pagina.jpg`)
+            .then(results => {
+                res.json(results);
+            })
+            .catch(errs => {
+                res.badRequest(errs);
+            });
+    }
 
 };
 

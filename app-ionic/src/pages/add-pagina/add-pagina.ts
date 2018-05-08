@@ -73,7 +73,7 @@ export class AddPaginaPage {
                     this.foto = null;
                     this.pagina = {};
                     this.navCtrl.pop();
-                    console.log(JSON.stringify(success));
+                    console.log(success.body.file);
                 },err => {
                     this.saveLoad = false;
                     this.saveLoad = false;
@@ -89,16 +89,19 @@ export class AddPaginaPage {
     baterFoto() {
         this.camera.getPicture(this.options).then((imageData) => {
 
-            let sourceDirectory = imageData.substring(0, imageData.lastIndexOf('/') + 1);
+            /*let sourceDirectory = imageData.substring(0, imageData.lastIndexOf('/') + 1);
             let sourceFileName = imageData.substring(imageData.lastIndexOf('/') + 1, imageData.length);
             sourceFileName = sourceFileName.split('?').shift();
+
             this.file.copyFile(sourceDirectory, sourceFileName, cordova.file.externalApplicationStorageDirectory, sourceFileName).then((result: any) => {
                 this.foto = imageData;
                 this.newPath = result.nativeURL;
 
             }, (err) => {
                 alert(JSON.stringify(err));
-            })
+            });*/
+            this.foto = imageData;
+            this.newPath = imageData;
 
         }, (err) => {
             alert('Erro ao bater a foto');

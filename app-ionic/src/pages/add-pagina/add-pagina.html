@@ -28,7 +28,7 @@
         </ion-list>
 
         <div class="acoes" *ngIf="!saveLoad else loading">
-            <button ion-button block color="primary" type="submit" [disabled]="!addForm.form.valid">Salvar Página</button>
+            <button ion-button block color="primary" type="submit" [disabled]="!addForm.form.valid || !newPath">Salvar Página</button>
             <button ion-button block outline type="button" (click)="cancelarClick()">Cancelar</button>
         </div>
 
